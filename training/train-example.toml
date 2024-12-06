@@ -1,0 +1,65 @@
+# Path to the prepared training ("train") dataset.
+training_set = "train/train.json"
+# Path to the prepared validation ("dev") dataset.
+dev_set = "dev/dev.json"
+
+# Configuration for the base BERT model.
+[bert]
+config = "rubert-tiny2/config.json"
+weights = "rubert-tiny2/pytorch_model.pt"
+tokenizer = "rubert-tiny2/tokenizer.json"
+# This model stores its weights names with the "bert" prefix.
+tensors_prefix = "bert"
+
+# Whether to unfreeze the BERT layers (yes).
+unfreeze_bert = true
+
+# Miscellaneous training parameters.
+[misc]
+# portion = 1.0
+
+
+[lr]
+# Starting learning rate for the warmup period.
+warmup = 3e-8
+# How many steps (as a fraction of the training set) the warmup phase must take.
+warmup_period = 0.1
+# Pretrained (BERT) layers will have its learning rate multiplied by this value,
+# so BERT layers are not changed as fast as the "head" layer.
+bert_multiplier = 0.3
+
+[lr.inter_epoch]
+# Learning rate exponential decrease
+[lr.inter_epoch.exponent_decrease]
+# Starting learning rate
+base = 3e-5
+# The base learning rate of an epoch will be reduced by this factor each next
+# epoch.
+factor = 1.1
+# The learning rate shouldn't go below this value
+min = 1e-7
+
+
+[lr.within_epoch]
+# Cosine annealing with warm restarts schedule.
+[lr.within_epoch.cosine_annealing]
+# The amount of restarts withitn the epoch. Zero stands for no restarts, just
+# continuousq gradual learning rate annealing.
+restarts = 5
+# The learning rate will be reduced by this factor by the end of a cycle.
+factor = 1000
+
+# # Constant learning rate within the epoch.
+# [lr.within_epoch.constant]
+# # No parameters
+
+
+[verification]
+# This samples are added to the "output" file which is generated for each epoch
+# only for a visual verification of how the model performs.
+samples = [
+    "В 1230 году князь сын Всеволода III Большое Гнездо Святослав, разобрал старую обветшавшую церковь Георгия в Юрьев-Польском",
+    "Расскажу как заработать 7$ за 1 минуту (В ЛС) актуально до 19.02.2018 16:00",
+    "По-моему этот крейт ничем не поможет.",
+    "UB удобнее представлять наоборот, как множество из всех возможных исходов",
+]

@@ -1,0 +1,28 @@
+[package]
+name = "training"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+camino = "1.1.9"
+clap = { version = "4.5.22", features = ["derive", "env"] }
+half = { version = "2.4.1", features = ["zerocopy"] }
+indicatif = "0.17.9"
+itertools = "0.13.0"
+ndarray = "0.16.1"
+nonzero_ext = "0.3.0"
+ort = { version = "=2.0.0-rc.9", features = ["cuda", "half"] }
+owo-colors = "4.1.0"
+rand = { version = "0.8.5", features = ["small_rng"] }
+rand_xoshiro = "0.6.0"
+regex = "1.11.1"
+serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.133"
+snafu = { version = "0.8.5", features = ["rust_1_65"] }
+tempfile = "3.14.0"
+tg_antispam = { path = ".." }
+tikv-jemallocator = { version = "0.6.0", features = ["unprefixed_malloc_on_supported_platforms"] }
+time = "0.3.37"
+toml = "0.8.19"
+urlencoding = "2.1.3"
+walkdir = "2.5.0"

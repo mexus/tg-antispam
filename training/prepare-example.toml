@@ -1,0 +1,61 @@
+# Data sets preparation
+
+# How much data goes into the "dev" dataset.
+dev_portion = 0.2
+# Where to put the "train" dataset.
+train_output = "train/train.json"
+# Where to put the "dev" dataset.
+dev_output = "dev/dev.json"
+# Seed for the pseudorandom number generator
+seed = 1337
+
+[sources."обычный чат"]
+kind = "telegram-dump"
+path = "raw-data/дамп-чата.json"
+# Take 80% of the messages from this export.
+partial = 0.8
+
+is_spam = false
+train = true
+dev = true
+
+[sources."огромный чат"]
+kind = "telegram-dump"
+path = "raw-data/флудилка.json"
+# Since the chat is extremely large, only 2% will suffice.
+partial = 0.02
+
+is_spam = false
+train = true
+dev = false
+
+[sources."риа новости"]
+kind = "telegram-dump"
+path = "raw-data/РИА Новости.json"
+# This is also another large dump, take 6%.
+partial = 0.06
+
+is_spam = false
+train = true
+# This should not go into the validation (dev) dataset.
+dev = false
+
+[sources."спам логи"]
+# Dump of a chat where spam messages are forwarded to.
+kind = "telegram-forwards"
+path = "spam-forwards-dump.json"
+
+is_spam = true
+train = true
+dev = true
+
+[sources."AI guard"]
+# This is special source: AI guard bot logs: https://t.me/ai_guard_logs
+kind = "telegram-ai-guard-logs"
+path = "ai-guard.json"
+partial = 0.3
+
+is_spam = true
+train = true
+dev = true
+
